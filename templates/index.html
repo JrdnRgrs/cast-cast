@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Cast-Cast</title>
+    <link rel="stylesheet"  type="text/css" href="{{url_for('static', filename='style.css')}}">
+  </head>
+  <body>
+    <h1>Cast-Cast</h1>
+    
+    <form method="POST">
+      <label for="url">URL TO CAST</label>
+      <input type="text" id="url" name="url" placeholder="https://my.domain/turntable" value="https://my.domain/turntable">
+      <br><br>
+      <label for="device">CHOOSE CAST DEVICE</label>
+      <select id="device" name="device">
+        {% for device, ip in zip(devices, ips) %}
+        <option value="{{ ip }}">{{ device }}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <button type="submit" name="action" value="Start">START CASTING</button>
+        <input type="hidden" id="device" name="device" value="{{ ip }}">
+        <button type="submit" name="action" value="Stop">STOP CASTING</button>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </form>
+    <script>
+        $(function() {
+            $('form').submit(function() {
+                $('input[type=submit]', this).attr('disabled', 'disabled');
+            });
+        });
+    </script>
+  </body>
+</html>
